@@ -1,0 +1,27 @@
+﻿
+Partial Class Page_RecargaSube
+    Inherits System.Web.UI.Page
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+
+        If Session("Usuario") Is Nothing Then
+            Response.Redirect("~/")
+        End If
+        If Now.Date > Convert.ToDateTime("2024-01-31") Then
+            msnSube.Visible = False
+        Else
+            msnSube.Visible = True
+        End If
+
+
+        User.Value = Session("Usuario")
+        Pass.Value = Session("Password")
+        NombreAgencia.Value = Session("NombreAgencia")
+        DireccionAgencia.Value = Session("DireccionAgencia")
+        MontoVentas.Value = Session("MontoVentas")
+        AptoCredito.Value = Session("AptoCredito")
+        IPCliente.Value = Session("IPCliente")
+
+
+    End Sub
+End Class

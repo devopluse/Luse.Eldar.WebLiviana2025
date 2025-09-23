@@ -1,0 +1,191 @@
+﻿
+.BtnAuxiliarcelular {
+    height: 115px;
+    width: 115px;
+    /*margin-left: 36%;
+    width: 30%;*/
+    /*background-image: url(../Img/boton_celular_01.png);
+    background-size: contain;
+    background-repeat: no-repeat;*/
+}
+
+.BtnAuxiliarMotos {
+    height: 115px;
+    width: 115px;
+    /*margin: 0px 10px 0px 10px;*/
+
+    /*margin-left: 36%;
+    width: 30%;*/
+    /*background-image: url(../Img/boton_moto_01.png);
+    background-size: contain;
+    background-repeat: no-repeat;*/
+}
+
+
+.BtnAuxiliarcelulartecnologia {
+    height: 115px;
+    width: 115px;
+
+    /*margin-left: 36%;
+    width: 30%;*/
+    /*background-image: url(../Img/boton_celular_01.png);
+    background-size: contain;
+    background-repeat: no-repeat;*/
+}
+
+.BtnAuxiliarAccesorios {
+    height: 115px;
+    width: 115px;
+
+    /*margin-left: 36%;
+    width: 30%;*/
+    /*background-image: url(../Img/boton_moto_01.png);
+    background-size: contain;
+    background-repeat: no-repeat;*/
+}
+
+/*.imgcss:hover {
+    visibility: hidden;
+    transform: scale(1.5);
+    z-index:-100;
+}*/
+.imgcssgrande:hover {
+  transform: scale(1.5);
+}
+
+.imgcssprestamo {
+    vertical-align: middle;
+    height: 115px;
+    width: auto;
+    z-index: 10;
+}
+.imgcssgrande {
+    vertical-align: middle;
+    height: 115px;
+    width: 115px;
+    z-index: 10;
+}
+.imgcssprestamo:hover {
+    /*visibility: hidden;*/
+    transform: scale(1.5);
+}
+.prestamo {
+    text-align: center;
+    height: 115px;
+    width: auto;
+    /* margin: 0px 10px 0px 10px;
+    margin-left: 36%;
+    width: 30%;*/
+    /*background-image: url(../img/prestamo_ya_02.png);
+    background-size: contain;
+    background-repeat: no-repeat;*/
+}
+
+
+.prestamo :hover {
+    /*height: 98px;
+    margin-top: 2px;*/
+    /*height: 133px;
+    width: 400px;*/
+    transform: scale(1.5);
+}
+.imgNews {
+    vertical-align: middle;
+    width: 663px;
+    height: 500px;
+    display: block;
+    margin: auto;
+    margin-top: 119px;
+}
+
+
+.subpres {
+    /*height: 80px;
+    margin-left: 20%;
+    width: 30%;
+    padding-bottom: 40px;
+    position:relative;
+    z-index:10;*/
+    margin-top: 15px;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 600px) {
+    .prestamo :hover {
+        height: 45px;
+        width: 86px;
+    }
+
+    /*.subpres :hover {
+        height: auto;
+        width: auto;
+    }*/
+
+    .imgcssgrande {
+        height: 45px;
+        width: auto;
+    }
+
+        .imgcssgrande :hover {
+            transform: scale(2);
+        }
+
+    .imgcssprestamo {
+        height: 45px;
+        width: auto;
+    }
+    .BtnAuxiliarMotos :hover {
+        height: 50px;
+        width: auto;
+    }
+
+    .BtnAuxiliarcelulartecnologia:hover {
+        height: 50px;
+        width: auto;
+    }
+
+    .BtnAuxiliarAccesorios :hover {
+        height: 50px;
+        width: auto;
+    }
+
+    .imgNews {
+        vertical-align: middle;
+        width: 397px;
+        height: 345px;
+        display: block;
+        margin: auto;
+        margin-top: 21px;
+    
+    }
+    .BtnAuxiliarcelular :hover {
+        height: 50px;
+        width: auto;
+    }
+    .BtnAuxiliarMotos {
+        height: 50px;
+        width: auto;
+    }
+
+    .BtnAuxiliarcelulartecnologia {
+        height: 50px;
+        width: auto;
+    }
+
+    .BtnAuxiliarAccesorios {
+        height: 50px;
+        width: auto;
+    }
+
+    .BtnAuxiliarcelular {
+        height: 50px;
+        width: auto;
+    }
+    .prestamo {
+        height: 50px;
+        width: auto;
+    }
+}
