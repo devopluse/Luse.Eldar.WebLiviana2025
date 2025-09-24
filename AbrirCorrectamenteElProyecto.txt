@@ -1,3 +1,0 @@
-Primero abrir la solucion Luse.Eldar.WebLiviana.sln
-Ya dentro de la solucion ir a Archivo/Abrir/SitioWeb
-Ahora solo elegir la carpeta "Luse.Eldar.WebLiviana" que esta a la altura del archivo de la solucion y listo
