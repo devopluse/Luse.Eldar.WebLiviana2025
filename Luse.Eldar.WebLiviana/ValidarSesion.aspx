@@ -35,7 +35,6 @@
         });
 
         var cantValidaciones = 0;
-
         function VerifySessionState(result) {
 
             if (result.d) {

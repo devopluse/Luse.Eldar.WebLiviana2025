@@ -59,27 +59,27 @@ Public Class Servicios
     <WebMethod()>
     Public Function Login(pObj As Parametros) As List(Of Parametros)
 
-        '' VALIDAR DATOS INGRESADOS DE USUARIO Y PASS
+        '' VALIDAR INTEGRIDAD DE DATOS INGRESADOS DE USUARIO Y PASS
         Dim oRta As New Parametros
         Dim oList As New List(Of Parametros)
-        If pObj.User = "" Or pObj.Pass = "" Or pObj.User.Length > 20 Or pObj.Pass.Length > 20 Then
+        If pObj.User = "" Or pObj.Pass = "" Or pObj.User.Length > 20 Or pObj.Pass.Length > 20 Or pObj.User.Length < 5 Or pObj.Pass.Length < 5 Then
             oRta.Estado = False
-            oRta.Mensaje = "Ingrese Usuario y Contraseña"
+            oRta.Mensaje = "Ingrese Usuario y Contraseña validos"
             oList.Add(oRta)
             Return oList
         End If
         '' VALIDAR IP
-        Dim oIPOk = RepoAudit.GetValidacionIP(pObj.IPCliente)
-        If oIPOk = False Then
-            ''grabo auditoria
+        Dim ipResult As ValidationResult = RepoAudit.GetValidacionIP(pObj.IPCliente)
+        If Not ipResult.Success Then
+            ' Grabo auditoría con el motivo devuelto por la validación
             RepoAudit.InsertAuditoria(New AuditoriaIngreso With {
-                .Fecha = Now,
-                .Usuario = pObj.User,
-                .Password = pObj.Pass,
-                .IP = pObj.IPCliente,
-                .Exito = False,
-                .Observaciones = "Intento de ingreso desde IP bloqueada"
-            })
+            .Fecha = Now,
+            .Usuario = pObj.User,
+            .Password = pObj.Pass,
+            .IP = pObj.IPCliente,
+            .Exito = False,
+            .Observaciones = "Validación IP fallida: " & ipResult.Reason})
+
             oRta.Estado = False
             oRta.Mensaje = "Usuario y Contraseña mal ingresada Consulte con soporte."
             oList.Add(oRta)
@@ -113,15 +113,15 @@ Public Class Servicios
         End If
 
         ''Si la validacion es correcta y la clave esta vencida enviamos la pagina para cambiar la clave
-        If DateDiff(DateInterval.Day, oAccesoLogin.DateForExpirationPassword, Now.Date) >= 0 Then
+        If DateDiff(DateInterval.Day, oAccesoLogin.DateForExpirationPassword, Now.Date) >= 0 Or oAccesoLogin.ChangePassword = True Then
             ''grabo auditoria
             RepoAudit.InsertAuditoria(New AuditoriaIngreso With {
                 .Fecha = Now,
                 .Usuario = pObj.User,
                 .Password = pObj.Pass,
                 .IP = pObj.IPCliente,
-                .Exito = False,
-                .Observaciones = oRta.Mensaje
+                .Exito = True,
+                .Observaciones = "Clave expirada debe cambiarla"
             })
             oRta.Estado = False
             oRta.Mensaje = "Su clave ha expirado. Debe cambiarla!"
@@ -132,14 +132,15 @@ Public Class Servicios
         End If
 
         '' Me aseguro que tenga el registro de stock sube
-        RepoAudit.EnsureStockSube(oAccesoLogin.IDAgencia)
+        RepoProd.EnsureStockSube(oAccesoLogin.IDAgencia)
+
         Dim mID As Long = RepoAudit.InsertAuditoria(New AuditoriaIngreso With {
                 .Fecha = Now,
                 .Usuario = pObj.User,
                 .Password = pObj.Pass,
                 .IP = pObj.IPCliente,
-                .Exito = False,
-                .Observaciones = "Ingreso Correcto con version 2025"
+                .Exito = True,
+                .Observaciones = "Ingreso correcto a ventas.cargaplus.com.ar Ver.: 25.09.26-1"
             })
 
         'Cargo valores para la sesion
@@ -149,21 +150,22 @@ Public Class Servicios
         oRta.SaldoSube = oAccesoLogin.StockAgenciaSube '' oTablaTemp.Rows(0)("StockAgenciaSube")
         oRta.IDAgencia = oAccesoLogin.IDAgencia  '' oTablaTemp.Rows(0)("IDAgencia")
         oRta.NombreAgencia = oAccesoLogin.Nombre ''oTablaTemp.Rows(0)("Nombre")
-        'oRta.DireccionAgencia =  ''oTablaTemp.Rows(0)("DireccionAgencia")
-
-        'oRta.Imei = "" 'oTablaTemp.Rows(0)("ImeI")
-        'oRta.IDPrestamoBase = oAccesoLogin. ''oTablaTemp.Rows(0)("IDPrestamoBase")
-        'oRta.AptoCredito =  ''oTablaTemp.Rows(0)("AptoCredito")
-        'oRta.MensajeCredito =  ''oTablaTemp.Rows(0)("MensajeCredito")
         oRta.IDAcceso = oAccesoLogin.IDAcceso ''oTablaTemp.Rows(0)("IDAcceso")
-        'oRta.HabilitadoEntregaDinero =  ''oTablaTemp.Rows(0)("HabilitadoEntregaDinero")
-        'oRta.CodPuestoRP =  ''oTablaTemp.Rows(0)("CodPuesto").ToString.PadLeft(6, "0")
-        'oRta.Agente =  ''oTablaTemp.Rows(0)("Agente").ToString.PadLeft(5, "0")
-        'oRta.Sucursal =  ''oTablaTemp.Rows(0)("Sucursal")
         oRta.IPCliente = pObj.IPCliente
         oRta.IDAuditoria = mID
         oRta.Estado = True
         oRta.Mensaje = "Ingreso Exitoso"
+
+        ''VALORES QUITADOS EN LA VERSION 2025
+        oRta.DireccionAgencia = "" ''oTablaTemp.Rows(0)("DireccionAgencia")
+        oRta.Imei = "" 'oTablaTemp.Rows(0)("ImeI")
+        oRta.IDPrestamoBase = 0 ''oTablaTemp.Rows(0)("IDPrestamoBase")
+        oRta.AptoCredito = "0"  ''oTablaTemp.Rows(0)("AptoCredito")
+        oRta.MensajeCredito = "" ''oTablaTemp.Rows(0)("MensajeCredito")
+        oRta.HabilitadoEntregaDinero = 0 ''oTablaTemp.Rows(0)("HabilitadoEntregaDinero")
+        oRta.CodPuestoRP = ""  ''oTablaTemp.Rows(0)("CodPuesto").ToString.PadLeft(6, "0")
+        oRta.Agente = "" ''oTablaTemp.Rows(0)("Agente").ToString.PadLeft(5, "0")
+        oRta.Sucursal = "" ''oTablaTemp.Rows(0)("Sucursal")
 
         oList.Add(oRta)
         Return oList

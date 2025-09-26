@@ -2,7 +2,6 @@
 Partial Class SIte2
     Inherits System.Web.UI.MasterPage
 
-
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
 
         If Session("Usuario") <> "" Then
@@ -21,21 +20,16 @@ Partial Class SIte2
         Else
             mnuRetiroDinero.Visible = False
         End If
-
-        'SaldoAgencia.InnerText = " " & Session("Saldo")
-        ' SaldoSube.InnerText = " " & Session("SaldoSube")
         Session("datos") = True
-
-        'Dim oEldar As New Luse.WsTransaccional.ExternalSales
-        'oEldar.GetSaldoWeb(Session("Usuario"), Session("Password"), Session("Saldo"), Session("SaldoSube"))
-        'SaldoAgencia.InnerText = " " & Session("Saldo")
-        'SaldoSube.InnerText = " " & Session("SaldoSube")
-
 
     End Sub
 
-
-
+    Protected Sub lnkLogout_Click(sender As Object, e As EventArgs)
+        System.Web.Security.FormsAuthentication.SignOut()
+        Session.Clear()
+        Session.Abandon()
+        Response.Redirect("~/Default.aspx", True)
+    End Sub
 
 
 End Class

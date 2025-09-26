@@ -199,5 +199,33 @@ Public Class SqlAccesoRepository
             End Using
         End Using
     End Function
+    Public Function EnsureStockSube(idAgencia As Integer) As Integer _
+        Implements IAccesoRepository.EnsureStockSube
 
+        Const sql As String = "
+        IF NOT EXISTS (
+            SELECT 1
+            FROM StockSube
+            WHERE IDAgencia = @IDAgencia
+              AND IDProducto = 100
+        )
+        BEGIN
+            INSERT INTO StockSube (IDProducto, IDAgencia, Cantidad, Activo, CargaInicial, StockPos, FechaModificacion, ImeiPos)
+            VALUES (100, @IDAgencia, 0, 1, 0, 0, GETDATE(), NULL);
+        END;
+
+        SELECT TOP 1 IDStockSube
+        FROM StockSube
+        WHERE IDAgencia = @IDAgencia
+          AND IDProducto = 100;"
+
+        Using cn As New SqlConnection(_cs)
+            Using cmd As New SqlCommand(sql, cn)
+                cmd.Parameters.Add("@IDAgencia", SqlDbType.Int).Value = idAgencia
+                cn.Open()
+                Dim obj = cmd.ExecuteScalar()
+                Return If(obj Is Nothing OrElse obj Is DBNull.Value, 0, Convert.ToInt32(obj))
+            End Using
+        End Using
+    End Function
 End Class

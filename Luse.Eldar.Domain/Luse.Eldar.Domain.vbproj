@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Entities\Acceso.vb" />
     <Compile Include="Entities\Auditoria.vb" />
+    <Compile Include="Entities\IpApiResponse.vb" />
     <Compile Include="Entities\LoginResult.vb" />
     <Compile Include="Interfaces\IAccesoRepository.vb" />
     <Compile Include="Interfaces\IAuditoriaRepository.vb" />
