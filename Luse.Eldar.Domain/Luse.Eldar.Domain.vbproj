@@ -44,6 +44,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -66,8 +67,10 @@
   <ItemGroup>
     <Compile Include="Entities\Acceso.vb" />
     <Compile Include="Entities\Auditoria.vb" />
+    <Compile Include="Entities\Eldar.vb" />
     <Compile Include="Entities\IpApiResponse.vb" />
     <Compile Include="Entities\LoginResult.vb" />
+    <Compile Include="Entities\Rapipago.vb" />
     <Compile Include="Interfaces\IAccesoRepository.vb" />
     <Compile Include="Interfaces\IAuditoriaRepository.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

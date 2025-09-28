@@ -6,6 +6,7 @@ Imports System.Threading.Tasks
 Imports System.Web.Services
 Imports LuSe.WsTransaccional
 Imports Newtonsoft.Json
+Imports LuSe.Eldar.Domain
 Imports Servicios
 
 
